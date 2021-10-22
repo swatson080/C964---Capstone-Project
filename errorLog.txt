@@ -1,0 +1,42 @@
+
+
+2021-10-21: Error: 'Missing value for bedroom' Input: '' End Input
+2021-10-21: Error: 'Missing value for bathroom' Input: '' End Input
+2021-10-21: Error: 'Missing value for floors' Input: '' End Input
+2021-10-21: Error: 'Missing value for condition' Input: '' End Input
+2021-10-21: Error: 'Missing value for waterfront' Input: '' End Input
+2021-10-21: Error: 'Missing value for year built' Input: '' End Input
+2021-10-21: Error: 'Missing value for year built' Input: '' End Input
+2021-10-21: Error: 'Year renovated should be later than year built' Year Built Input: '2016' Year Renovated Input: '1999' End Input
+2021-10-21: Error: 'Missing value for square feet of living space' Input: '' End Input
+2021-10-21: Error: 'Square foot living value should be numeric (no commas)' Input: 'fdsg' End Input
+2021-10-21: Error: 'Missing value for square feet of lot space' Input: '' End Input
+2021-10-21: Error: 'Missing value for bedroom' Input: '' End Input
+2021-10-22: Error: 'Missing value for bedroom' Input: '' End Input
+2021-10-22: Error: 'Missing value for bedroom' Input: '' End Input
+2021-10-22: Error: 'Missing value for bedroom' Input: '' End Input
+2021-10-22: Error: 'Missing value for bedroom' Input: '' End Input
+2021-10-22: Error: 'Missing value for bedroom' Input: '' End Input
+2021-10-22: Error: 'Missing value for bedroom' Input: '' End Input
+2021-10-22: Error: 'Square foot lot value should be numeric (no commas)' Input: '.125' End Input
+2021-10-22: Error: 'Square foot living value should be numeric (no commas)' Input: '1,500' End Input
+2021-10-22: Error: 'Missing value for square feet of lot space' Input: '' End Input
+2021-10-22: Error: 'Square foot living value should be numeric (no commas)' Input: '1,500' End Input
+2021-10-22: Error: 'Square foot lot value should be numeric (no commas)' Input: '.125' End Input
+2021-10-22: Error: 'Square foot living value should be numeric (no commas)' Input: '1,500' End Input
+2021-10-22: Error: 'Missing value for square feet of lot space' Input: '' End Input
+2021-10-22: Error: 'Square foot living value should be numeric (no commas)' Input: '1,500' End Input
+2021-10-22: Error: 'Square foot living space should be numeric (no commas)' Input: '1,500' End Input
+2021-10-22: Error: 'Square foot living space should be numeric (no commas)' Input: '1.500' End Input
+2021-10-22: Error: 'Square foot living space should be numeric (no commas)' Input: '1.5' End Input
+2021-10-22: Error: 'Square foot lot value should be numeric (no commas)' Input: '1.5' End Input
+2021-10-22: Error: 'Square foot lot value should be numeric (no commas)' Input: '.125' End Input
+2021-10-22: Error: 'Square foot lot value should be numeric (no commas)' Input: '.125' End Input
+2021-10-22: Error: 'Square foot living space should be numeric (no commas)' Input: '1,500' End Input
+2021-10-22: Error: 'Square foot living space should be numeric (no commas)' Input: '1500c' End Input
+2021-10-22: Error: 'Square foot lot value should be numeric (no commas)' Input: '54,45' End Input
+2021-10-22: Error: 'Square foot lot value should be numeric (no commas)' Input: '5445f' End Input
+2021-10-22: Error: 'Missing value for square feet of lot space' Input: '' End Input
+2021-10-22: Error: 'Missing value for square feet of living space' Input: '' End Input
+2021-10-22: Error: 'Missing value for square feet of lot space' Input: '' End Input
+2021-10-22: Error: 'Square foot lot value should be numeric (no commas)' Input: '5.445' End Input
