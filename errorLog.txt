@@ -40,3 +40,4 @@
 2021-10-22: Error: 'Missing value for square feet of living space' Input: '' End Input
 2021-10-22: Error: 'Missing value for square feet of lot space' Input: '' End Input
 2021-10-22: Error: 'Square foot lot value should be numeric (no commas)' Input: '5.445' End Input
+2021-10-29: Error: 'Missing value for bedroom' Input: '' End Input

@@ -1,23 +1,55 @@
 # Stephen Watson - C964 Capstone Project
 
 # Import libraries
-import tkinter
+import ctypes
 from tkinter import ttk, messagebox
-
-import numpy as np
 import math
-import csv
 from datetime import date
 import pandas as pd
-from matplotlib.backends._backend_tk import NavigationToolbar2Tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 from tkinter import *
-import matplotlib.pyplot as plt
-from PIL import ImageTk, Image
+
+# Class definitions
+
+class LinearRegressionModel:
+
+    # Constructor reads in the .csv data and creates a pandas dataframe, input and output vectors
+    def __init__(self):
+        # Read in the csv file
+        self.houseSaleData = pd.read_csv("kc_house_data_cleaned_final_feature_set.csv")
+        # Mark the first row as the header
+        houseSaleData.head()
+        # Independent variable (price) vector
+        self.salePrice = self.houseSaleData.price
+        # Creating the input vector - contains all dependent variables
+        self.inputVector = self.houseSaleData.drop(['price'], axis=1)
+        # Create the linear regression model
+        self.mlModel = LinearRegression()
+        # Initialize variable for prediction
+        self.prediction = 0
+        self.coefficients = None
+        self.features = None
+        self.intercept = None
+
+    # Fits a line to the data and assigns values to coefficients, features, and intercept
+    def fit(self):
+        self.mlModel.fit(self.inputVector, self.salePrice)
+        self.coefficients = self.mlModel.coef_
+        self.features = self.mlModel.feature_names_in_
+        self.intercept = self.mlModel.intercept_
+
+    # Predict price based on input
+    def predict(self, input):
+        self.prediction = mlModel.predict(input)
+
+    # Prints the .csv data contained in the pandas dataframe
+    def printData(self):
+        print(self.houseSaleData)
+
 
 # Function definitions
 # Command function for the login button - checks entered username and password and unhides the main window if correct
@@ -65,15 +97,15 @@ def drawScatterPlot(featureName, r, frame):
     ax.set_ylabel('Price')
 
 def onSelectCol1Combobox(event):
-    if col1comboBox.get() == 'Bedrooms':
+    if scatterplotCombo.get() == 'Bedrooms':
         drawScatterPlot('bedrooms', 1, frame0)
-    elif col1comboBox.get() == 'Bathrooms':
+    elif scatterplotCombo.get() == 'Bathrooms':
         drawScatterPlot('bathrooms', 1, frame0)
-    elif col1comboBox.get() == 'Floors':
+    elif scatterplotCombo.get() == 'Floors':
         drawScatterPlot('floors', 1, frame0)
-    elif col1comboBox.get() == 'Sq. ft. living':
+    elif scatterplotCombo.get() == 'Sq. ft. living':
         drawScatterPlot('sqft_living', 1, frame0)
-    elif col1comboBox.get() == 'Sq. ft. lot':
+    elif scatterplotCombo.get() == 'Sq. ft. lot':
         drawScatterPlot('sqft_lot', 1, frame0)
     return
 
@@ -203,19 +235,18 @@ def onClickPredict():
         predictionTextbox.insert(0, '{:,.0f}'.format(predictedPrice))
         predictionTextbox.config(state='readonly')
 
-# Testing pandas and sklearn
+# Global variables
 
+# MACHINE LEARNING MODEL
 # Read in the csv file
 houseSaleData = pd.read_csv("kc_house_data_cleaned_final_feature_set.csv")
 # Mark the first row as the header
 houseSaleData.head()
 
-# Below line prints the csv data that was just read in
-#print(houseSaleData)
 salePrice = houseSaleData.price
 
 inputVector = houseSaleData.drop(['price'], axis = 1)
-inputVectorTrain, inputVectorTest, salePriceTrain, salePriceTest = train_test_split(inputVector, salePrice, test_size=0.20)
+inputVectorTrain, inputVectorTest, salePriceTrain, salePriceTest = train_test_split(inputVector, salePrice, test_size=0.3)
 
 # Create the linear regression model
 mlModel = LinearRegression()
@@ -225,19 +256,16 @@ mlModel.fit(inputVectorTrain, salePriceTrain)
 salePricePrediction = mlModel.predict(inputVectorTest)
 
 # Assign each feature with its respective value
-#data = {'bedrooms' : [3], 'bathrooms' : [2.5], 'sqft_living' : [1780], 'sqft_lot' : [16532], 'floors' : [2], 'waterfront' : [0], 'view' : [0], 'condition' : [3], 'grade' : [7], 'sqft_above' : [1780], 'sqft_basement' : [0], 'yr_built' : [1993], 'yr_renovated' : [0], 'sqft_living15' : [1600], 'sqft_lot15' : [5000]}
 data = {'bedrooms' : [3], 'bathrooms' : [1], 'sqft_living' : [1500], 'sqft_lot' : [10000], 'floors' : [1], 'waterfront' : [0], 'condition' : [3], 'yr_built' : [1965], 'yr_renovated' : [2012]}
 
 # Generate a data frame object to use in prediction
 test = pd.DataFrame(data)
 
-#print(test.shape)
 # Get the predicted price of the house
 predictedPrice = mlModel.predict(test)[0]
 adjustedPredictedPrice = predictedPrice * 1.159
 
 # Print the predicted price of the house
-#print('Predicted house price: {:,.2f}'.format((mlModel.predict(test)[0])))
 print('Predicted house price: {:,.2f}'.format(predictedPrice))
 print('Predicted house price adjusted for inflation: {:,.2f}'.format(adjustedPredictedPrice))
 
@@ -245,16 +273,21 @@ print('Predicted house price adjusted for inflation: {:,.2f}'.format(adjustedPre
 print('Coefficients: ', mlModel.coef_)
 print(mlModel.feature_names_in_)
 print('Intercept: ', mlModel.intercept_)
+
 print('Mean squared error (MSE): %.2f' % mean_squared_error(salePriceTest, salePricePrediction))
 print('Root mean squared error (RMSE): %.2f' % math.sqrt(mean_squared_error(salePriceTest, salePricePrediction)))
-print('Coefficient of determination (R^2): %.2f' % r2_score(salePriceTest, salePricePrediction))
+r2Score = r2_score(salePriceTest, salePricePrediction)
+print('Coefficient of determination (R^2): %.2f' % r2Score)
 
 # Build GUI - login screen and main screen
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
+
 root = Tk()
 root.title('House Price Predictor')
+root.geometry('')
 
-loginWindow = Toplevel()
-loginWindow.geometry('220x100')
+loginWindow = Toplevel(bg='bisque')
+loginWindow.geometry('310x130')
 loginWindow.title('House Price Predictor')
 
 usernameLabel = Label(loginWindow, text='Username: ').grid(row=0, column=0, pady=5, sticky='W')
@@ -278,7 +311,6 @@ frame1 = Frame(root, bd=3)
 # Put plots in frame0
 histogramFig = Figure(figsize=(3, 2), tight_layout=True)
 histogramCanvas = FigureCanvasTkAgg(histogramFig, frame0)
-# NavigationToolbar2Tk(histogramCanvas, root)
 axHistogram = histogramFig.add_subplot()
 histogramCanvas.get_tk_widget().grid(row=0, column=0)
 houseSaleData['price'].plot(kind='hist', legend=True, ax=axHistogram)
@@ -288,16 +320,31 @@ drawScatterPlot('bedrooms', 1, frame0)
 
 # Place label and combobox in frame0
 scatterplotLabel = Label(frame0, bg='white', text='Choose a feature')
+scatterplotCombo = ttk.Combobox(frame0, state='readonly')
+scatterplotCombo['values'] = ('Bedrooms', 'Bathrooms', 'Floors', 'Sq. ft. living', 'Sq. ft. lot')
 
-col1comboBox = ttk.Combobox(frame0, state='readonly')
-col1comboBox['values'] = ('Bedrooms', 'Bathrooms', 'Floors', 'Sq. ft. living', 'Sq. ft. lot')
 # Set value of the combo box to 'Bedrooms'
-col1comboBox.current(0)
-col1comboBox.bind('<<ComboboxSelected>>', onSelectCol1Combobox)
+scatterplotCombo.current(0)
+scatterplotCombo.bind('<<ComboboxSelected>>', onSelectCol1Combobox)
 
 # Position the label and combobox in frame0
 scatterplotLabel.grid(row=2, column=0)
-col1comboBox.grid(row=3, column=0)
+scatterplotCombo.grid(row=3, column=0)
+
+# Position Coefficients table in frame0
+resultTable = Figure(figsize=(3, 4), tight_layout=True)
+tableCanvas = FigureCanvasTkAgg(resultTable, frame0)
+axTable = resultTable.add_subplot()
+axTable.xaxis.set_visible(False)
+axTable.yaxis.set_visible(False)
+axTable.axis('off')
+axTable.table(cellText=[[mlModel.feature_names_in_[0], '%.2f' % mlModel.coef_[0]], [mlModel.feature_names_in_[1], '%.2f' % mlModel.coef_[1]],
+                        [mlModel.feature_names_in_[2], '%.2f' % mlModel.coef_[2]], [mlModel.feature_names_in_[3], '%.2f' % mlModel.coef_[3]],
+                        [mlModel.feature_names_in_[4], '%.2f' % mlModel.coef_[4]], [mlModel.feature_names_in_[5], '%.2f' % mlModel.coef_[5]],
+                        [mlModel.feature_names_in_[6], '%.2f' % mlModel.coef_[6]], [mlModel.feature_names_in_[7], '%.2f' % mlModel.coef_[7]],
+                        [mlModel.feature_names_in_[8], '%.2f' % mlModel.coef_[8]]], loc='center')
+tableCanvas.get_tk_widget().grid(row=5, column=0)
+axTable.set_title('Approximate Coefficients')
 
 # Position elements in frame1
 
